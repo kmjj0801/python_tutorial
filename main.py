@@ -2,41 +2,40 @@ import warnings
 warnings.filterwarnings('ignore')
 
 import logging
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO) # ERROR하면 없어짐(주석제거)
 
-import pandas as pd 
 
-from common.dataset import load_dataset
-from common.preprocessing.eda import do_eda
-from common.preprocessing.preprocessing import do_preprocessing
-from common.modeling.model import get_model
-from common.modeling.training import do_training
-from common.utils import reset_seeds
 
-@reset_seeds
-def modeling():
-    logging.info("##################################")
-    logging.info("Start Load Dataset")
-    # 1. train dataset, test dataset 
-    df_train, df_train_target = load_dataset("./data/train.csv", target_col="survived")
-    df_test, _ = load_dataset("./data/test.csv")
+
+##################
+# 코드 정의 영역 #
+##################
+
+# import뒤에는 함수 또는 클래스만 작성하자!
+# from 뒤에는 폴더 또는 파일명만 작성하자! 
+from print_hello import print_hi
+from service.print_gg import print_goodgame   
+# print_hello -> 같은 폴더 안
+# print_gg -> 다른 폴더 안 ( 이 경우에는 import를 다르게 해주면 됨.)
+
+def main(num):
+    # 2. Hi도 프린트 
+    new_num = print_hi(num=num)
+    # 1. 코딩 좋아 ㅎㅎ 
+    logging.info(f"코딩 좋아 ㅎㅎ{'ㅎ'* new_num}")
     
-    # 2. eda
-    do_eda(df_train=df_train)
-    
-    # 3. data preprocessing
-    tr_x, te_x, tr_y, te_y, test = do_preprocessing(df_train, df_train_target, df_test)
-
-    # 4. model
-    model = do_training(get_model(), tr_x, tr_y, te_x, te_y)
-
-    # 5. prediction
+    # service 폴더 안의 print_gg를 import 후 함수 호출
+    print_goodgame(num1=num, num2=new_num)
 
 
-    # 6. submission
-
-
+# 앞: print_hello에서 정의한 num
+# 뒤: main의 num
 
 if __name__ == "__main__":
-    modeling()
+
+##################
+# 코드 실행 영역 #
+##################
+    
+    main(num=2) # 코딩좋아, Hi가 2번씩 실행됨
 
